@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace SelfhostApi
 {
-    public class LoginController:ApiController
+    public class LoginController : ApiController
     {
         // GET api/values 
         public IEnumerable<string> Get()
@@ -21,9 +21,16 @@ namespace SelfhostApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ActionName("sss")]
+        [HttpGet]
         public string Get(int id)
         {
             return id.ToString();
+        }
+
+        public string SayHi(string user)
+        {
+            return user + " say hi";
         }
 
         // POST api/values 

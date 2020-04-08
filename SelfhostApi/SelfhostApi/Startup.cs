@@ -19,12 +19,22 @@ namespace SelfhostApi
             HttpConfiguration config = new HttpConfiguration();
             appBuilder.UseSwaggerUi3(typeof(Startup).Assembly, setting =>
             {
-                setting.GeneratorSettings.DefaultUrlTemplate = "{controller}/{action}/{id?}";
+                setting.GeneratorSettings.DefaultUrlTemplate = "api/{controller}/{action}/{id?}";
                 setting.PostProcess = document =>
                 {
                     document.Info.Title = "WebApi Sample";
                 };
             });
+
+            appBuilder.UseWebApi(config);
+            config.MapHttpAttributeRoutes();
+            config.EnsureInitialized();
+
+            config.Routes.MapHttpRoute(
+               name: "NotDefaultApi",
+               routeTemplate: "api/{controller}/sss/{id}",
+               defaults: new { id = RouteParameter.Optional }
+           );
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -32,9 +42,9 @@ namespace SelfhostApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            appBuilder.UseWebApi(config);
-            config.MapHttpAttributeRoutes();
-            config.EnsureInitialized();
+
+
+
         }
     }
 }
